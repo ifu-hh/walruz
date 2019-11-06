@@ -19,7 +19,7 @@ describe Walruz::Policy do
   
   it "should generate an indicator that the policy was executed after authorization queries" do
     policy = Beatle::PAUL.authorize(:sing, Song::YESTERDAY)
-    policy[:author_policy?].should be_true
+    policy[:author_policy?].should be_truthy
   end
   
   it "should have a default label" do
@@ -47,7 +47,7 @@ describe Walruz::Policy do
     
     it "should work properly" do
       george_authorship_songs = @songs.select(&AuthorPolicy.with_actor(Beatle::GEORGE))
-      george_authorship_songs.should have(1).song
+      expect(george_authorship_songs).to have(1).song
       george_authorship_songs.should == [Song::BLUE_JAY_WAY]
       
       

@@ -74,12 +74,12 @@ describe 'Walruz::Actor' do
     end
     
     it "if a :reload symbol is passed as the third parameter it should not use the cached result" do
-      Walruz::Manager.stub!(:check_action_authorization).and_return([true, {}])
-      Beatle::JOHN.can?(:sing, Song::ALL_YOU_NEED_IS_LOVE).should be_true
+      allow(Walruz::Manager).to receive(:check_action_authorization).and_return([true, {}])
+      Beatle::JOHN.can?(:sing, Song::ALL_YOU_NEED_IS_LOVE).should be_truthy
       
-      Walruz::Manager.stub!(:check_action_authorization).and_return([false, {}])
-      Beatle::JOHN.can?(:sing, Song::ALL_YOU_NEED_IS_LOVE).should be_true
-      Beatle::JOHN.can?(:sing, Song::ALL_YOU_NEED_IS_LOVE, :reload).should be_false
+      allow(Walruz::Manager).to receive(:check_action_authorization).and_return([false, {}])
+      Beatle::JOHN.can?(:sing, Song::ALL_YOU_NEED_IS_LOVE).should be_truthy
+      Beatle::JOHN.can?(:sing, Song::ALL_YOU_NEED_IS_LOVE, :reload).should be_falsey
     end
     
     it "should receive at least 2 parameters" do
@@ -99,7 +99,7 @@ describe 'Walruz::Actor' do
       proc_called = lambda do |params|  
         params.should_not be_nil
         params.should be_kind_of(Hash)
-        params[:author_policy?].should be_true
+        params[:author_policy?].should be_truthy
       end
       Beatle::JOHN.can?(:sing, Song::ALL_YOU_NEED_IS_LOVE, &proc_called)
     end
@@ -115,11 +115,11 @@ describe 'Walruz::Actor' do
     end
     
     it "should return false if the actor and the subject dont satisfy the given policy" do
-      Beatle::PAUL.satisfies?(:colaborating_with_john_policy, Song::TAXMAN).should be_false
+      Beatle::PAUL.satisfies?(:colaborating_with_john_policy, Song::TAXMAN).should be_falsey
     end
     
     it "should return true if the actor and the subject satisfy the given policy" do
-      Beatle::GEORGE.satisfies(:colaborating_with_john_policy, Song::TAXMAN).should be_true
+      Beatle::GEORGE.satisfies(:colaborating_with_john_policy, Song::TAXMAN).should be_truthy
     end
     
   end
@@ -133,7 +133,7 @@ describe 'Walruz::Actor' do
     it "should return the parameters from the policy if the actor and the subject satisfy the policy" do
       policy_params = Beatle::GEORGE.satisfies(:colaborating_with_john_policy, Song::TAXMAN)
       policy_params.should_not be_nil
-      policy_params[:in_colaboration?].should be_true
+      policy_params[:in_colaboration?].should be_truthy
     end
     
     it "should raise a Walruz::ActionNotFound error if the policy is not found" do

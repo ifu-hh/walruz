@@ -1,3 +1,5 @@
+require 'walruz/version'
+
 module Walruz
 
   base_path = File.dirname(__FILE__)
@@ -9,26 +11,24 @@ module Walruz
   autoload :Policy,  base_path + '/walruz/policy'
   autoload :Utils,   base_path + '/walruz/utils'
   autoload :Config,  base_path + '/walruz/config'
-  
+
 
   def self.version
-    require "yaml"
-    version = YAML.load_file(File.dirname(__FILE__) + "/../VERSION.yml") 
-    "%s.%s.%s" % [version[:major], version[:minor], version[:patch]]
+    "%s.%s.%s" % VERSION
   end
 
   def self.setup
     config = Config.new
     yield config
   end
-  
+
   # Holds all the policies declared on the system
   # @return [Hash<Symbol, Walruz::Policy>] A hash of policies, each identified by it's policy label
   # @todo Make this thread-safe
   def self.policies
     Walruz::Policy.policies
   end
-  
+
   # Returns a Walruz::Policy Class represented by the specified label 
   #
   # @param [Symbol] policy_label The label that identifies a policy
@@ -42,6 +42,6 @@ module Walruz
     raise ActionNotFound.new(:policy_label, :label => policy_label) if policy_clz.nil?
     policy_clz
   end
-  
-  Config.add_authorization_query_methods_to(self) 
+
+  Config.add_authorization_query_methods_to(self)
 end

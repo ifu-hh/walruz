@@ -6,7 +6,7 @@ describe Walruz::Manager do
 
     it "should invoke the policies associated to an action on a subject performed by an actor" do
       result = Walruz::Manager.check_action_authorization(Beatle::JOHN, :sing, Song::ALL_YOU_NEED_IS_LOVE)
-      result[0].should be_true
+      result[0].should be_truthy
     end
 
     describe "when executing validations on an invalid subject" do
@@ -53,7 +53,7 @@ describe Walruz::Manager do
         it "should return the policy hash" do
           policy_params = Walruz.satisfies!(Beatle::RINGO, :subject_is_actor, Beatle::RINGO)
           policy_params.should_not be_nil
-          policy_params[:subject_is_actor?].should be_true
+          policy_params[:subject_is_actor?].should be_truthy
         end
 
       end

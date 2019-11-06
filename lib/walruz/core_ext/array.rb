@@ -45,8 +45,8 @@ module Walruz
       #     # this will execute current_user.can?(:read, post) for each element of the array
       #
       def only_authorized_for(actor, opts = {})
-        if opts.respond_to?(:[])
-          only_authorized_with_options(actor, opts)
+        if opts.respond_to?(:to_hash)
+          only_authorized_with_options(actor, opts.to_hash)
         else # use the opts 
           only_authorized_on_action(actor, opts)
         end

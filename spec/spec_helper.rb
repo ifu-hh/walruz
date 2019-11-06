@@ -1,5 +1,6 @@
 require 'rubygems'
-require 'spec'
+require 'rspec'
+require 'rspec/collection_matchers'
 require 'pp'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
@@ -9,7 +10,4 @@ require File.dirname(__FILE__) + '/scenario'
 
 Walruz.setup do |config_walruz| 
   config_walruz.enable_array_extension
-end
-
-Spec::Runner.configure do |config|
 end

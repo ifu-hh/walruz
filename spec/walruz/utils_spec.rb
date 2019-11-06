@@ -27,7 +27,7 @@ describe Walruz::Utils do
 
     it "should return as policy keyword, the name of the original policies keywords concatenated with `_and_`" do
       policy_params = Beatle::JOHN.authorize(:sell, Song::ALL_YOU_NEED_IS_LOVE)
-      policy_params[:"author_policy_and_not(in_colaboration)?"].should be_true
+      policy_params[:"author_policy_and_not(in_colaboration)?"].should be_truthy
     end
     
   end
@@ -36,7 +36,7 @@ describe Walruz::Utils do
     
     it "should return as policy keyword, the name of the original policy keyword with a `not()` around" do
       policy_params = Beatle::JOHN.authorize(:sell, Song::ALL_YOU_NEED_IS_LOVE)
-      policy_params[:"not(in_colaboration)?"].should be_true
+      policy_params[:"not(in_colaboration)?"].should be_truthy
     end
     
   end
