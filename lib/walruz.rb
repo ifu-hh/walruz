@@ -12,11 +12,6 @@ module Walruz
   autoload :Utils,   base_path + '/walruz/utils'
   autoload :Config,  base_path + '/walruz/config'
 
-
-  def self.version
-    "%s.%s.%s" % VERSION
-  end
-
   def self.setup
     config = Config.new
     yield config

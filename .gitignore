@@ -13,3 +13,4 @@ examples/rails/db/schema.rb
 examples/rails/db/*.sqlite3
 tags
 *.swp
+/Gemfile.lock
