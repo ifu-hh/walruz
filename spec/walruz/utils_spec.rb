@@ -3,15 +3,15 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Walruz::Utils do
   
   def check_actor_can_on_subject(label, actor, subject)
-    lambda do
+    expect do
       actor.authorize!(label, subject)
-    end.should_not raise_error(Walruz::NotAuthorized)
+    end.not_to raise_error
   end
   
   def check_actor_can_not_on_subject(label, actor, subject)
-    lambda do
+    expect do
       actor.authorize!(label, subject)
-    end.should raise_error(Walruz::NotAuthorized)
+    end.to raise_error(Walruz::NotAuthorized)
   end
   
   describe "when using combinators `any`, `all` or `negate`" do
@@ -27,7 +27,7 @@ describe Walruz::Utils do
 
     it "should return as policy keyword, the name of the original policies keywords concatenated with `_and_`" do
       policy_params = Beatle::JOHN.authorize(:sell, Song::ALL_YOU_NEED_IS_LOVE)
-      policy_params[:"author_policy_and_not(in_colaboration)?"].should be_truthy
+      expect(policy_params[:"author_policy_and_not(in_colaboration)?"]).to be_truthy
     end
     
   end
@@ -36,7 +36,7 @@ describe Walruz::Utils do
     
     it "should return as policy keyword, the name of the original policy keyword with a `not()` around" do
       policy_params = Beatle::JOHN.authorize(:sell, Song::ALL_YOU_NEED_IS_LOVE)
-      policy_params[:"not(in_colaboration)?"].should be_truthy
+      expect(policy_params[:"not(in_colaboration)?"]).to be_truthy
     end
     
   end

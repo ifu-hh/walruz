@@ -7,17 +7,17 @@ describe Walruz::Memoization do
   end
 
   it "should invoke the original method the first time" do
-    @foo.highcost.should == "This is the first time"
+    expect(@foo.highcost).to eq("This is the first time")
   end
 
   it "should invoke the memoized result the second time" do
-    @foo.highcost.should == "This is the first time"
-    @foo.highcost.should == "This is the first time"
+    expect(@foo.highcost).to eq("This is the first time")
+    expect(@foo.highcost).to eq("This is the first time")
   end
 
   it "should invoke the method once memoized if and only if the reload parameter is given" do
-    @foo.highcost.should == "This is the first time"
-    @foo.highcost(:reload).should == "This is the second time"
+    expect(@foo.highcost).to eq("This is the first time")
+    expect(@foo.highcost(:reload)).to eq("This is the second time")
   end
 
 end
